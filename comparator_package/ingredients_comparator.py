@@ -60,7 +60,7 @@ def main_logic(session):
             ingredient_catalog.modify_date = now_utc()
             modified_ingredients.append(ingredient_catalog)
 
-    # INGREDIENTI RIMOSSI/REMOVED INGREDIENTS
+    # REMOVED INGREDIENTS
     # check if there are ingredients in the catalog that are no longer in the temp
     for substance_id, ingredient_catalog in catalog_ingredients.items():
         if substance_id not in temp_ingredients:

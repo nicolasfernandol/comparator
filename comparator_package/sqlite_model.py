@@ -57,13 +57,13 @@ class IngredientBase:
     perfuming = Column(Text)
     status = Column(Text)
 
-# classe che rappresenta la tabella temporanea degli ingredienti/class that represents the temporary ingredients table
+# class that represents the temporary ingredients table
 class IngredientTemp(Base, IngredientBase):
     __tablename__ = "ingredients"
     id = Column(Integer, primary_key=True, autoincrement=True)
 
 
-# classe che rappresenta la tabella degli ingredienti confrontati/class that represents the compared ingredients table
+# class that represents the compared ingredients table
 class IngredientCatalog(Base, IngredientBase):
     __tablename__ = "compared_ingredients"
     id = Column(Integer, primary_key=True, autoincrement=True)

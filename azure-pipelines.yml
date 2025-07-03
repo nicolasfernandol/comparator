@@ -2,7 +2,6 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-# ingredients_comparer.py
 
 trigger:
 - main
@@ -57,10 +56,5 @@ stages:
     - task: PythonScript@0
       inputs:
         scriptSource: 'filePath'
-        scriptPath: 'UpdateService_package/ingredients_downloader.py'
-      displayName: 'Run Ingredients Downloader'
-    - task: PythonScript@0
-      inputs:
-        scriptSource: 'filePath'
-        scriptPath: 'UpdateService_package/ingredients_comparer.py'
+        scriptPath: 'comparator_package/ingredients_comparator.py'
       displayName: 'Run Ingredients Comparer'
