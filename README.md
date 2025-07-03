@@ -31,5 +31,3 @@ To reduce file size and comply with data usage practices, the public version of 
 - Includes test coverage with `pytest`
 
 ---
-
-## Structure
