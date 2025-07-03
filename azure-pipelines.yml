@@ -1,0 +1,66 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+# ingredients_comparer.py
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: 'Build Stage'
+  jobs:
+  - job: BuildJob
+    displayName: 'Build Job'
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.11'
+      displayName: 'Use Python 3.11'
+
+    - script: |
+        python -m pip install --upgrade build
+        python -m build
+      displayName: 'Build Python Project'
+
+- stage: Test
+  displayName: 'Test Stage'
+  dependsOn: Build
+  jobs:
+  - job: TestJob
+    displayName: 'Test Job'
+    steps:
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: 'Install Python Dependencies'
+    - script: |
+        pip install pytest pytest-azurepipelines
+        pytest
+      displayName: 'Run Pytest'
+
+- stage: Run
+  displayName: 'Run Stage'
+  dependsOn: Test
+  jobs:
+  - job: RunJob
+    displayName: 'Run Job'
+    steps:
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: 'Install Python Dependencies'
+    - task: PythonScript@0
+      inputs:
+        scriptSource: 'filePath'
+        scriptPath: 'UpdateService_package/ingredients_downloader.py'
+      displayName: 'Run Ingredients Downloader'
+    - task: PythonScript@0
+      inputs:
+        scriptSource: 'filePath'
+        scriptPath: 'UpdateService_package/ingredients_comparer.py'
+      displayName: 'Run Ingredients Comparer'
